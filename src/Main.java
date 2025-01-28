@@ -4,38 +4,21 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        TicTacBoard board = new TicTacBoard();
+        TicTacBoard board = new TicTacBoard(3);
         Scanner sc = new Scanner(System.in);
-        GameSteps gs = new GameSteps();
-        char player1 = 0;
-        char player2 = 0;
+        GameSteps gs = new GameSteps(board);
 
-
-        System.out.println("Игра началась. Приятной игры. Да победит сильнейший");
-
+        Player player1 = new Player();
+        Player player2 = new Player();
         // Знакомство с игроками
-        for (int i = 0; i < 2; i++) {
-            boolean tmp = false;
-            String input = null;
-            while (!tmp) {
-                tmp = true;
-                System.out.println("Игроку #" + (i + 1) + " приготовиться, выберите свой символ для игры");
-                input = sc.next();
-                if (input.length() > 1) {
-                    System.out.println("Игрок #" + (i + 1) + "  вы ввели больше одного симовла, попробуйте еще раз");
-                    tmp = false;
-                } else {
-                    if (i % 2 == 0){
-                        player1 = input.charAt(0);
-                    } else {
-                        player2 = input.charAt(0);
-                    }
-                }
-            }
+        System.out.println("Игра началась. Приятной игры. Да победит сильнейший");
+        System.out.println("Игроку #1 приготовиться, выберите свой символ для игры");
+        player1.setSign(sc.next());
+        System.out.println("Игроку #2 приготовиться, выберите свой символ для игры");
+        player2.setSign(sc.next());
 
-        }
-        System.out.println("Игрок #1 - " + player1);
-        System.out.println("Игрок #2 - " + player2);
+        System.out.println("Игрок #1 - " + player1.getSign());
+        System.out.println("Игрок #2 - " + player2.getSign());
         board.printBoard();
         System.out.println("Начинаем");
 
@@ -44,14 +27,14 @@ public class Main {
         boolean isWin = false;
 
         while (!isWin) {
-            char tmpPlayer;
+            Player tmpPlayer;
             if (count % 2 == 0) {
                 tmpPlayer = player1;
             } else {
                 tmpPlayer = player2;
             }
 
-            System.out.println("Игрок " + tmpPlayer + " - укажите ряд и столбец куда поставить ваш знак");
+            System.out.println("Игрок " + tmpPlayer.getSign() + " - укажите ряд и столбец куда поставить ваш знак");
             int row = sc.nextInt();
             int col = sc.nextInt();
             boolean isCorrectStep = board.step(row, col, tmpPlayer);
@@ -61,7 +44,7 @@ public class Main {
                 continue;
             }
             board.printBoard();
-            isWin = gs.checkWinner2Players(board, player1, player2);
+            isWin = gs.checkWinner2Players(player1, player2);
         }
 
 

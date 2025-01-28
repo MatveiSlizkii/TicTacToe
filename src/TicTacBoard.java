@@ -1,8 +1,8 @@
 public class TicTacBoard {
     private char[][] board;
 
-    public TicTacBoard() {
-        board = new char[3][3]; // Создаем массив 3 на 3
+    public TicTacBoard(int size) {
+        board = new char[size][size]; // Создаем массив 3 на 3
         initializeBoard();
         this.board = board;
 
@@ -16,8 +16,8 @@ public class TicTacBoard {
      * Заполняем массив символом '-'
      */
     private void initializeBoard() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
                 board[i][j] = '-';
             }
         }
@@ -41,23 +41,16 @@ public class TicTacBoard {
      *
      * @param row    ряд
      * @param col    столбец
-     * @param player символ игрока
+     * @param player   игрок
      * @return статус успеха действия
      */
-
-
-    /**
-     * @param row    ряд
-     * @param col    столбец
-     * @param player символ игрока
-     * @return статус успеха действия
-     */
-    public boolean step(int row, int col, char player) {
-        if (row > 3 || row < 1 || col > 3 || col < 1 || this.board[row - 1][col - 1] != '-') {
+    public boolean step(int row, int col, Player player ) {
+        char playerSign = player.getSign();
+        if (row > board.length || row < 1 || col > board.length || col < 1 || this.board[row - 1][col - 1] != '-') {
             System.out.println("Вы указали неверные значение поля, попробуйте еще раз");
             return false;
         }
-        this.board[row - 1][col - 1] = player;
+        this.board[row - 1][col - 1] = playerSign ;
         return true;
     }
 
